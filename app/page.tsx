@@ -5,12 +5,14 @@ import dynamic from 'next/dynamic';
 const Hero = dynamic(() => import('@/components/home/Hero'), { ssr: false });
 const Vision = dynamic(() => import('@/components/home/Vision'), { ssr: false });
 const Test = dynamic(() => import('@/components/home/Test'), { ssr: false });
+const Data = dynamic(() => import('@/components/home/Data'), { ssr: false });
 
 const Page = () => {
   return (
     <div>
       <Hero /> {/* Correctly using the Hero component */}
       <Vision />
+      <Data/>
       <Test />
     </div>
   );

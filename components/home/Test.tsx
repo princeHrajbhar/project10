@@ -1,182 +1,103 @@
-'use client';  // Ensure this file is only rendered on the client
+"use client";
+import React, { useState, useEffect } from "react";
+import Image from "next/image"; // Import Image from next/image
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 
-import React, { useEffect, useState, useRef } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import { FaUniversity, FaRocket, FaUsers } from 'react-icons/fa';
+const facultyMembers = [
+  {
+    id: 1,
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBvqzyx_zoi6q2c0Gd1XnE7wysD9PGOLe3-A&s",
+    name: "Dr. John Doe",
+    profession: "Dean",
+    description:
+      "Dr. John Doe is the Dean of the E-Cell, guiding the team towards innovative growth and sustainable entrepreneurship.",
+  },
+  {
+    id: 2,
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBvqzyx_zoi6q2c0Gd1XnE7wysD9PGOLe3-A&s",
+    name: "Dr. Jane Smith",
+    profession: "Faculty Head",
+    description:
+      "Dr. Jane Smith is the Faculty Head, leading academic and practical learning experiences to foster future innovators.",
+  },
+  {
+    id: 3,
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBvqzyx_zoi6q2c0Gd1XnE7wysD9PGOLe3-A&s",
+    name: "Prof. Robert Brown",
+    profession: "HOD - Entrepreneurship",
+    description:
+      "Prof. Robert Brown is the Head of Department (HOD) for Entrepreneurship, ensuring quality education and support for all budding entrepreneurs.",
+  },
+];
 
-const HeroSection = () => {
-  const [colleges, setColleges] = useState(1);  // Start count from 1
-  const [startups, setStartups] = useState(1);  // Start count from 1
-  const [cities, setCities] = useState(1);      // Start count from 1
-  const [inView, setInView] = useState(false); // Track if the section is in view
-  const [isClient, setIsClient] = useState(false); // State to track if it's client-side
+const FacultyAndDeanSection = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-  const controls = useAnimation();
-  const sectionRef = useRef(null);  // Reference to the section
-
-  // UseEffect to check if it's client-side
   useEffect(() => {
-    setIsClient(true); // This ensures the section is only observed on the client side
+    const slideInterval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % facultyMembers.length);
+    }, 5000);
+
+    return () => clearInterval(slideInterval);
   }, []);
 
-  // Start the count animation when the section comes into view
-  useEffect(() => {
-    if (!isClient) return; // Only run if it's client-side
-    
-    const sectionNode = sectionRef.current;  // Store the ref in a local variable
-    
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry.isIntersecting) {
-          setInView(true);
-        }
-      },
-      {
-        rootMargin: '0px',
-        threshold: 0.5, // Trigger when 50% of the section is visible
-      }
+  const handlePrev = () => {
+    setCurrentIndex((prevIndex) =>
+      prevIndex === 0 ? facultyMembers.length - 1 : prevIndex - 1
     );
+  };
 
-    if (sectionNode) {
-      observer.observe(sectionNode);  // Use the variable instead of the ref directly
-    }
-
-    return () => {
-      if (sectionNode) {
-        observer.unobserve(sectionNode);  // Cleanup using the variable
-      }
-    };
-  }, [isClient]); // Only run after the component is mounted
-
-  // Trigger the animation when section comes into view
-  useEffect(() => {
-    if (inView) {
-      const animateCounts = async () => {
-        await controls.start({ opacity: 1, y: 0 });
-        animateNumber(setColleges, 150); // Target: 150 colleges
-        animateNumber(setStartups, 300); // Target: 300 startups
-        animateNumber(setCities, 50);    // Target: 50 cities
-      };
-      animateCounts();
-    }
-  }, [inView, controls]);
-
-  const animateNumber = (setter: React.Dispatch<React.SetStateAction<number>>, target: number) => {
-    let count = 1; // Start count from 1
-    const interval = setInterval(() => {
-      count += 1;
-      setter(count);
-      if (count >= target) clearInterval(interval);
-    }, 10); // Adjust speed here
+  const handleNext = () => {
+    setCurrentIndex((prevIndex) =>
+      (prevIndex + 1) % facultyMembers.length
+    );
   };
 
   return (
-    <section
-      ref={sectionRef} // Attach the section reference to the intersection observer
-      className="py-16 bg-white text-gray-800 w-full"
-    >
-      <div className="container mx-auto px-4 lg:px-20 text-center">
-        <motion.h1
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-6"
-        >
-          Empowering Entrepreneurs and Innovators
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-          className="text-lg md:text-xl text-gray-600 mb-12"
-        >
-          At E-Cell, we are creating a dynamic ecosystem that connects colleges, startups, and students across the globe. 
-          Together, we are shaping the future of entrepreneurship, driving innovation, and empowering the next generation of leaders.
-        </motion.p>
+    <section className="py-16 bg-gray-50 text-gray-800">
+      <div className="container mx-auto px-4">
+        <h2 className="text-3xl font-extrabold text-center text-gray-900 mb-8">
+          Meet Our Esteemed Faculty, Dean & HOD
+        </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {/* Colleges Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={controls}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            className="bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg p-8 shadow-2xl transform transition-all duration-500 hover:scale-105 hover:bg-opacity-90 backdrop-blur-md"
-          >
-            <div className="flex justify-center mb-4">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-              >
-                <FaUniversity className="text-5xl text-white" />
-              </motion.div>
+        <div className="relative max-w-4xl mx-auto">
+          {/* Display Current Member */}
+          <div className="flex items-center justify-between bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-500 ease-in-out transform hover:scale-105">
+            <div className="w-1/3 p-4 flex justify-center">
+              <Image
+                src={facultyMembers[currentIndex].image}
+                alt={facultyMembers[currentIndex].name}
+                width={128} // Image width
+                height={128} // Image height
+                className="object-cover rounded-full border-4 border-gray-200 shadow-lg"
+              />
             </div>
-            <motion.h2
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.5 }}
-              className="text-6xl font-bold text-white mb-2"
-            >
-              {colleges}+ 
-            </motion.h2>
-            <p className="text-lg text-white">Colleges connected to our ecosystem</p>
-          </motion.div>
+            <div className="w-2/3 p-6">
+              <h3 className="text-3xl font-semibold text-gray-800">{facultyMembers[currentIndex].name}</h3>
+              <p className="text-lg text-gray-600 mt-2">{facultyMembers[currentIndex].profession}</p>
+              <p className="mt-4 text-gray-500">{facultyMembers[currentIndex].description}</p>
+            </div>
+          </div>
 
-          {/* Startups Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={controls}
-            transition={{ duration: 0.5, delay: 0.8 }}
-            className="bg-gradient-to-r from-yellow-500 to-yellow-700 rounded-lg p-8 shadow-2xl transform transition-all duration-500 hover:scale-105 hover:bg-opacity-90 backdrop-blur-md"
-          >
-            <div className="flex justify-center mb-4">
-              <motion.div
-                animate={{ y: [-10, 10, -10] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <FaRocket className="text-5xl text-white" />
-              </motion.div>
-            </div>
-            <motion.h2
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.5 }}
-              className="text-6xl font-bold text-white mb-2"
+          {/* Navigation Arrows */}
+          <div className="absolute inset-0 flex justify-between items-center px-6">
+            <button
+              onClick={handlePrev}
+              className="p-3 bg-gray-800 text-white rounded-full shadow-md hover:bg-gray-700 transition duration-300 ease-in-out"
             >
-              {startups}+ 
-            </motion.h2>
-            <p className="text-lg text-white">Startups supported by our network</p>
-          </motion.div>
-
-          {/* Cities Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={controls}
-            transition={{ duration: 0.5, delay: 1 }}
-            className="bg-gradient-to-r from-green-500 to-green-700 rounded-lg p-8 shadow-2xl transform transition-all duration-500 hover:scale-105 hover:bg-opacity-90 backdrop-blur-md"
-          >
-            <div className="flex justify-center mb-4">
-              <motion.div
-                animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-              >
-                <FaUsers className="text-5xl text-white" />
-              </motion.div>
-            </div>
-            <motion.h2
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1.5 }}
-              className="text-6xl font-bold text-white mb-2"
+              <FaArrowLeft size={24} />
+            </button>
+            <button
+              onClick={handleNext}
+              className="p-3 bg-gray-800 text-white rounded-full shadow-md hover:bg-gray-700 transition duration-300 ease-in-out"
             >
-              {cities}+ 
-            </motion.h2>
-            <p className="text-lg text-white">Cities with students in our community</p>
-          </motion.div>
+              <FaArrowRight size={24} />
+            </button>
+          </div>
         </div>
       </div>
     </section>
   );
 };
 
-export default HeroSection;
+export default FacultyAndDeanSection;
