@@ -1,4 +1,4 @@
-'use client';
+'use client';  // Ensure this file is only rendered on the client
 
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useAnimation } from 'framer-motion';
@@ -9,12 +9,20 @@ const HeroSection = () => {
   const [startups, setStartups] = useState(1);  // Start count from 1
   const [cities, setCities] = useState(1);      // Start count from 1
   const [inView, setInView] = useState(false); // Track if the section is in view
+  const [isClient, setIsClient] = useState(false); // State to track if it's client-side
 
   const controls = useAnimation();
   const sectionRef = useRef(null);  // Reference to the section
 
+  // UseEffect to check if it's client-side
+  useEffect(() => {
+    setIsClient(true); // This ensures the section is only observed on the client side
+  }, []);
+
   // Start the count animation when the section comes into view
   useEffect(() => {
+    if (!isClient) return; // Only run if it's client-side
+    
     const sectionNode = sectionRef.current;  // Store the ref in a local variable
     
     const observer = new IntersectionObserver(
@@ -39,7 +47,7 @@ const HeroSection = () => {
         observer.unobserve(sectionNode);  // Cleanup using the variable
       }
     };
-  }, []);  // Empty dependency array to ensure effect runs once
+  }, [isClient]); // Only run after the component is mounted
 
   // Trigger the animation when section comes into view
   useEffect(() => {
@@ -109,7 +117,7 @@ const HeroSection = () => {
               transition={{ duration: 1.5 }}
               className="text-6xl font-bold text-white mb-2"
             >
-              {colleges}+
+              {colleges}+ 
             </motion.h2>
             <p className="text-lg text-white">Colleges connected to our ecosystem</p>
           </motion.div>
@@ -135,7 +143,7 @@ const HeroSection = () => {
               transition={{ duration: 1.5 }}
               className="text-6xl font-bold text-white mb-2"
             >
-              {startups}+
+              {startups}+ 
             </motion.h2>
             <p className="text-lg text-white">Startups supported by our network</p>
           </motion.div>
@@ -161,7 +169,7 @@ const HeroSection = () => {
               transition={{ duration: 1.5 }}
               className="text-6xl font-bold text-white mb-2"
             >
-              {cities}+
+              {cities}+ 
             </motion.h2>
             <p className="text-lg text-white">Cities with students in our community</p>
           </motion.div>

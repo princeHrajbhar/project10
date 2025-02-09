@@ -1,6 +1,6 @@
-'use client';
+'use client';  // Ensure that this file is only rendered on the client
 
-import React, { useState, useEffect } from 'react'; // Removed useRef
+import React, { useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -66,11 +66,13 @@ const VisionSection = () => {
   };
 
   useEffect(() => {
+    if (typeof window === 'undefined') return; // Ensure we are running on the client-side
+
     const observerOptions = {
       rootMargin: '0px',
       threshold: 0.5, // Trigger when 50% of the card is visible
     };
-  
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         const target = entry.target as HTMLElement; // Cast to HTMLElement
@@ -84,24 +86,24 @@ const VisionSection = () => {
         }
       });
     }, observerOptions);
-  
+
     const elements = document.querySelectorAll('.vision-card');
     elements.forEach((element) => observer.observe(element));
-  
+
     return () => {
       elements.forEach((element) => observer.unobserve(element));
     };
-  }, []);
+  }, []); // Ensure this only runs in the client-side
 
   return (
     <section className="py-12 bg-gray-50">
       <div className="container mx-auto px-4">
-      <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
-  Our Vision for Empowering Entrepreneurs
-</h2>
-<p className="text-lg text-center text-gray-600 mb-8">
-  At E-Cell, we are committed to creating a dynamic, inclusive, and innovative ecosystem for aspiring entrepreneurs. Our vision is to empower the next generation of business leaders by providing mentorship, resources, and opportunities for collaboration. Together, we aim to foster growth, spark innovation, and drive leadership in the world of entrepreneurship.
-</p>
+        <h2 className="text-3xl font-bold text-center mb-4 text-gray-800">
+          Our Vision for Empowering Entrepreneurs
+        </h2>
+        <p className="text-lg text-center text-gray-600 mb-8">
+          At E-Cell, we are committed to creating a dynamic, inclusive, and innovative ecosystem for aspiring entrepreneurs. Our vision is to empower the next generation of business leaders by providing mentorship, resources, and opportunities for collaboration. Together, we aim to foster growth, spark innovation, and drive leadership in the world of entrepreneurship.
+        </p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {visions.map((vision, index) => (
