@@ -2,3 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes borderColorCycle {
+    0% {
+      border-color: #ff007f; /* Pink */
+    }
+    25% {
+      border-color: #00c3ff; /* Light Blue */
+    }
+    50% {
+      border-color: #00ff00; /* Green */
+    }
+    75% {
+      border-color: #ffcc00; /* Yellow */
+    }
+    100% {
+      border-color: #ff007f; /* Back to Pink */
+    }
+  }
+  
+  .animate-borderColorCycle {
+    animation: borderColorCycle 3s infinite ease-in-out;
+  }
+  
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fadeIn {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+  
