@@ -1,9 +1,6 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+// next.config.js
+module.exports = {
   images: {
-    domains: ['img.freepik.com'], // Allowing external image domain
+    domains: ['img.freepik.com', 'encrypted-tbn0.gstatic.com'],
   },
 };
-
-export default nextConfig;

@@ -6,6 +6,7 @@ const Hero = dynamic(() => import('@/components/home/Hero'), { ssr: false });
 const Vision = dynamic(() => import('@/components/home/Vision'), { ssr: false });
 const Test = dynamic(() => import('@/components/home/Test'), { ssr: false });
 const Data = dynamic(() => import('@/components/home/Data'), { ssr: false });
+const Faculty = dynamic(() => import('@/components/home/Faculty'), { ssr: false });
 
 const Page = () => {
   return (
@@ -13,7 +14,8 @@ const Page = () => {
       <Hero /> {/* Correctly using the Hero component */}
       <Vision />
       <Data/>
-      <Test />
+      <Faculty/>
+      {/* <Test /> */}
     </div>
   );
 };
