@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image"; // Import Image from next/image
 
 const facultyMembers = [
   {
@@ -83,10 +84,12 @@ const FacultyAndDeanSection = () => {
             >
               {/* Image Section */}
               <div className="w-full md:w-1/3 p-4 flex justify-center">
-                <img
+                <Image
                   src={currentMember.image}
                   alt={currentMember.name}
-                  className="w-32 h-32 md:w-48 md:h-48 object-cover rounded-full border-4 border-gray-200 shadow-lg"
+                  width={192} // Set width
+                  height={192} // Set height
+                  className="object-cover rounded-full border-4 border-gray-200 shadow-lg"
                   onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
                     const target = e.target as HTMLImageElement;
                     target.src = "https://via.placeholder.com/150";

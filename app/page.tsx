@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 
 const Hero = dynamic(() => import('@/components/home/Hero'), { ssr: false });
 const Vision = dynamic(() => import('@/components/home/Vision'), { ssr: false });
-const Test = dynamic(() => import('@/components/home/Test'), { ssr: false });
+//const Test = dynamic(() => import('@/components/home/Test'), { ssr: false });
 const Data = dynamic(() => import('@/components/home/Data'), { ssr: false });
 const Faculty = dynamic(() => import('@/components/home/Faculty'), { ssr: false });
 
