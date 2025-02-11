@@ -84,17 +84,19 @@ const FacultyAndDeanSection = () => {
             >
               {/* Image Section */}
               <div className="w-full md:w-1/3 p-4 flex justify-center">
-                <Image
-                  src={currentMember.image}
-                  alt={currentMember.name}
-                  width={192} // Set width
-                  height={192} // Set height
-                  className="object-cover rounded-full border-4 border-gray-200 shadow-lg"
-                  onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
-                    const target = e.target as HTMLImageElement;
-                    target.src = "https://via.placeholder.com/150";
-                  }}
-                />
+                <div className="relative w-48 h-48">
+                  <Image
+                    src={currentMember.image}
+                    alt={currentMember.name}
+                    layout="fill" // This makes the image take up the full container
+                    objectFit="cover" // Ensure the image covers the entire area
+                    className="rounded-full border-4 border-gray-200 shadow-lg"
+                    onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "https://via.placeholder.com/150";
+                    }}
+                  />
+                </div>
               </div>
 
               {/* Content Section */}
