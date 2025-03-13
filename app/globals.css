@@ -40,3 +40,23 @@
     animation: fadeIn 0.5s ease-out forwards;
   }
   
+  
+
+  /* globals.css */
+@keyframes fire {
+  0% {
+    box-shadow: 0 0 5px #ff4500, 0 0 10px #ff4500, 0 0 20px #ff4500;
+  }
+  50% {
+    box-shadow: 0 0 10px #ff8c00, 0 0 20px #ff8c00, 0 0 30px #ff8c00;
+  }
+  100% {
+    box-shadow: 0 0 5px #ff4500, 0 0 10px #ff4500, 0 0 20px #ff4500;
+  }
+}
+
+.shadow-fire {
+  animation: fire 1.5s infinite ease-in-out;
+}
+
+
