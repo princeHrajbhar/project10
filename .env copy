@@ -1,0 +1,9 @@
+MONGODB_URI=mongodb+srv://princerajbhar001:VVyGS3DP62FzNvDA@cluster0.onjaikb.mongodb.net/user_database
+JWT_SECRET=superrandomstrongkey123!@#%^&*
+EMAIL_USER=princerajbhar001@gmail.com
+EMAIL_PASS=kqch lhfj emio csqo
+
+#cloudinary
+CLOUDINARY_CLOUD_NAME=dieuobok1
+CLOUDINARY_API_KEY=414476428559111
+CLOUDINARY_API_SECRET=xQvrUWzCTWCpf9tNNUVQU6ePFcY
