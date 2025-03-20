@@ -1,4 +1,4 @@
-import { connectToDB } from "@/lib/mongodb";
+import { connectToDatabase } from "@/lib/mongodb";
 import MemberModel from "@/models/MemberSchema";
 import { NextResponse } from "next/server";
 
@@ -6,7 +6,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     // Connect to the database (no need to destructure `db` if not used)
-    await connectToDB();
+    await connectToDatabase();
 
     // Query the database to fetch team members (with pagination if needed)
     const members = await MemberModel.find().sort({ name: 1 });

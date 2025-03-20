@@ -1,23 +1,37 @@
-import mongoose from "mongoose";
+import mongoose, { ConnectOptions } from 'mongoose';
 
-let isConnected: boolean = false;
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/princedb';
 
-export const connectToDB = async (): Promise<void> => {
-  mongoose.set("strictQuery", true)
+if (!MONGODB_URI) {
+  throw new Error('Please define the MONGODB_URI environment variable');
+}
 
-  if (isConnected) {
-    console.log("MongoDB is already connected");
-    return;
+let cachedConnection: mongoose.Connection | null = null;
+let cachedPromise: Promise<typeof mongoose> | null = null;
+
+export const connectToDatabase = async (): Promise<typeof mongoose> => {
+  if (cachedConnection && cachedConnection.readyState === 1) {
+    console.log('✅ Using cached database connection');
+    return mongoose;
+  }
+
+  if (!cachedPromise) {
+    console.log('🚀 Establishing new database connection...');
+    cachedPromise = mongoose.connect(MONGODB_URI, {
+      bufferCommands: false, // Avoid memory leaks
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    } as ConnectOptions);
   }
 
   try {
-    await mongoose.connect(process.env.MONGODB_URL || "", {
-      dbName: "Borcelle_Admin"
-    })
-
-    isConnected = true;
-    console.log("MongoDB is connected");
-  } catch (err) {
-    console.log(err)
+    const connection = await cachedPromise;
+    cachedConnection = connection.connection;
+    console.log('✅ Database connected successfully');
+    return connection;
+  } catch (error) {
+    console.error('❌ Database connection failed:', error);
+    cachedPromise = null;
+    throw new Error('Failed to connect to the database');
   }
-}
+};
