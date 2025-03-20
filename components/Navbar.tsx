@@ -111,7 +111,7 @@ const Navbar: React.FC = () => {
       {/* Mobile Menu */}
       <div className={`md:hidden ${isMenuOpen ? "block" : "hidden"} w-full bg-white shadow-md`}>
         <div className="flex flex-col items-center space-y-4 py-4">
-          {[{ name: "Home", path: "/" }, { name: "About", path: "/about" }, { name: "Contact", path: "/contact" }, { name: "Blog", path: "/blog" }, { name: "Product", path: "/product" }].map((menu) => (
+          {[{ name: "Home", path: "/" }, { name: "About", path: "/about" }, { name: "Contact", path: "/contact" }, { name: "Blog", path: "/blog" }, { name: "Team", path: "/team" }].map((menu) => (
             <Link
               key={menu.name}
               href={menu.path}

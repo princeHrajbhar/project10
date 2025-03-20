@@ -15,7 +15,7 @@ const LandingPage = () => {
   }, [controls, inView]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-blue-50 to-purple-50 py-20 px-4">
+    <div className="min-h-screen bg-white py-20 px-4">
       {/* Heading Section */}
       <motion.div
         ref={ref}
