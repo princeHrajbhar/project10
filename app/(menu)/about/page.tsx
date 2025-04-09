@@ -8,7 +8,7 @@ const teamMembers = [
   {
     name: "Prince Rajbhar",
     role: "Team Leader",
-    image: "https://via.placeholder.com/150",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQffVXFgYxENiH-VLaMIoiIgkDilyO2hA9VIw&s",
     linkedin: "#",
     twitter: "#",
     email: "#",
